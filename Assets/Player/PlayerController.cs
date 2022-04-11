@@ -10,7 +10,8 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed;
     public bool isMoving;
 
-    private Vector2 input;
+    public Vector2 input;
+    private Vector2 forwardVector;
 
     private void Awake()
     {
@@ -26,6 +27,12 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        HandleMovement();
+        HandleDigging();
+    }
+
+    private void HandleMovement()
+    {
         if (isMoving) return;
 
         input.x = Input.GetAxisRaw("Horizontal");
@@ -33,6 +40,9 @@ public class PlayerController : MonoBehaviour
 
         if (input == Vector2.zero) return;
         if (input.x != 0) input.y = 0;
+
+        // calculate forward vector
+        forwardVector = input;
 
         var targetPos = transform.position;
 
@@ -49,20 +59,23 @@ public class PlayerController : MonoBehaviour
         }
 
         StartCoroutine(Move(targetPos));
-
-        // check for player digging
-        if (Input.GetKeyDown(KeyCode.Space))
-            Dig();
     }
 
-    private void Dig()
+    private void HandleDigging()
     {
-        // ensure the player is not moving
-        if (isMoving)
-            return;
+        // check for player digging
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            // ensure the player is not moving
+            if (isMoving)
+                return;
 
-        // get the tile benenath the player
-        
+            Vector3Int positionOfPlayer = LevelManager.Instance.grid.WorldToCell(transform.position);
+            Vector3Int positionInFrontOfPlayer = positionOfPlayer + Vector3Int.RoundToInt(
+                new Vector3(forwardVector.y, -forwardVector.x, 0));
+
+            LevelManager.Instance.l1Tilemap.SetTile(positionInFrontOfPlayer, null);
+        }
     }
 
     IEnumerator Move(Vector3 targetPos)

@@ -9,7 +9,6 @@ public class LevelManager : MonoBehaviour
 
     public Grid grid;
     public Tilemap l1Tilemap;
-    public Tilemap l2Tilemap;
 
     private void Awake()
     {
@@ -21,6 +20,11 @@ public class LevelManager : MonoBehaviour
         {
             Instance = this;
         }
+    }
+
+    public TileBase GetTileAtPosition(int x, int y)
+    {
+        return l1Tilemap.GetTile(grid.WorldToCell(new Vector2(x, y)));
     }
 
     void Start()
