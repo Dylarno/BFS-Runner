@@ -13,6 +13,32 @@ public class PlayerController : MonoBehaviour
     public Vector2 input;
     private Vector2 forwardVector;
 
+    public TileBase TileInFront
+    {
+        get
+        {
+            Vector3Int positionOfPlayer = LevelManager.Instance.grid.WorldToCell(transform.position);
+            return LevelManager.Instance.l1Tilemap.GetTile(positionOfPlayer + Vector3Int.RoundToInt(
+                new Vector3(forwardVector.y, -forwardVector.x, 0)));
+        }
+    }
+
+    public Vector3Int GridPosition
+    {
+        get
+        {
+            return LevelManager.Instance.grid.WorldToCell(transform.position);
+        }
+    }
+
+    public Vector3Int GridLookingLocation
+    {
+        get
+        {
+            return GridPosition + Vector3Int.RoundToInt(new Vector3(forwardVector.y, -forwardVector.x, 0));
+        }
+    }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -70,11 +96,7 @@ public class PlayerController : MonoBehaviour
             if (isMoving)
                 return;
 
-            Vector3Int positionOfPlayer = LevelManager.Instance.grid.WorldToCell(transform.position);
-            Vector3Int positionInFrontOfPlayer = positionOfPlayer + Vector3Int.RoundToInt(
-                new Vector3(forwardVector.y, -forwardVector.x, 0));
-
-            LevelManager.Instance.l1Tilemap.SetTile(positionInFrontOfPlayer, null);
+            LevelManager.Instance.l1Tilemap.SetTile(GridLookingLocation, null);
         }
     }
 
