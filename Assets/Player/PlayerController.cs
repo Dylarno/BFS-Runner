@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class PlayerController : MonoBehaviour
 {
@@ -33,6 +34,20 @@ public class PlayerController : MonoBehaviour
         }
 
         StartCoroutine(Move(targetPos));
+
+        // check for player digging
+        if (Input.GetKeyDown(KeyCode.Space))
+            Dig();
+    }
+
+    private void Dig()
+    {
+        // ensure the player is not moving
+        if (isMoving)
+            return;
+
+        // get the tile benenath the player
+        
     }
 
     IEnumerator Move(Vector3 targetPos)
