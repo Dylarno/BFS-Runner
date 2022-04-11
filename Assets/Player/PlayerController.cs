@@ -9,17 +9,28 @@ public class PlayerController : MonoBehaviour
 
     public float moveSpeed;
     public bool isMoving;
+    public bool isAlive;
 
     public Vector2 input;
     private Vector2 forwardVector;
+    private Animation _animation;
+    private AudioSource audioSource;
+
+    public AudioClip dieSound;
 
     public TileBase TileInFront
     {
         get
         {
-            Vector3Int positionOfPlayer = LevelManager.Instance.grid.WorldToCell(transform.position);
-            return LevelManager.Instance.l1Tilemap.GetTile(positionOfPlayer + Vector3Int.RoundToInt(
-                new Vector3(forwardVector.y, -forwardVector.x, 0)));
+            return LevelManager.Instance.l1Tilemap.GetTile(GridLookingLocation);
+        }
+    }
+
+    public TileBase TileBeneath
+    {
+        get
+        {
+            return LevelManager.Instance.l1Tilemap.GetTile(GridPosition);
         }
     }
 
@@ -51,8 +62,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        _animation = GetComponent<Animation>();
+        audioSource = GetComponent<AudioSource>();
+    }
+
     void Update()
     {
+        // ensure is alive
+        if (!isAlive)
+            return;
+
         HandleMovement();
         HandleDigging();
     }
@@ -100,6 +121,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void Die()
+    {
+        _animation.Play("Die");
+        audioSource.PlayOneShot(dieSound);
+        isAlive = false;
+    }
+
     IEnumerator Move(Vector3 targetPos)
     {
         isMoving = true;
@@ -112,5 +140,9 @@ public class PlayerController : MonoBehaviour
 
         transform.position = targetPos;
         isMoving = false;
+
+        // check if the player should die
+        if (TileBeneath == null)
+            Die();
     }
 }
