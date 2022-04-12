@@ -107,12 +107,14 @@ MonoBehaviour:
   dieSound: {fileID: 8300000, guid: 0e1eed134af7acc47b3b8b4243d61cbe, type: 3}
   dugTileSprite: {fileID: 2676945747483461434, guid: 5aeaa75dc5180e44996c95e026ea71c7, type: 3}
   undugTileSprite: {fileID: 2676945747483461434, guid: 4fda7e2b0ffd3bf489359eeee8d31510, type: 3}
+  moveDelay: 0
+  countingMoveDelay: 0
   smellPrefab: {fileID: 3727381267595545964, guid: 615910156f3fd72479838d7bb5fb3bf2, type: 3}
   input: {x: 0, y: 0}
   smells: []
   digIndicator: {fileID: 3527845873403493067}
   digSound: {fileID: 8300000, guid: 578c3547d12d3b14f87737c57d81a8f3, type: 3}
-  undugSound: {fileID: 8300000, guid: 578c3547d12d3b14f87737c57d81a8f3, type: 3}
+  undugSound: {fileID: 8300000, guid: 444efbbf3d200dd45b29bfd9ef2cea85, type: 3}
   portalOpenSound: {fileID: 8300000, guid: 82f29dfddef4a794aaba6853885c36a8, type: 3}
   portalEnterSound: {fileID: 8300000, guid: adc55a1502c5866449fa7b550ef05281, type: 3}
   coinSound: {fileID: 8300000, guid: e254c939c950e7f4c8f0946109e8977b, type: 3}
