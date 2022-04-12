@@ -55,6 +55,22 @@ public abstract class Entity : MonoBehaviour
         }
     }
 
+    protected bool IsAboveGround
+    {
+        get
+        {
+            return TileBeneath != LevelManager.Instance.empty;
+        }
+    }
+
+    protected bool IsLookingAtGround
+    {
+        get
+        {
+            return TileInFront != LevelManager.Instance.empty;
+        }
+    }
+
     protected List<Vector3Int> GetNavigationTo(Vector3 target)
     {
         Vector3Int startingPosition = LevelManager.Instance.grid.WorldToCell(transform.position);
@@ -206,7 +222,7 @@ public abstract class Entity : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
 
             // check if the entity should die
-            if (TileBeneath == null)
+            if (!IsAboveGround)
                 isDone = true;
 
             yield return null;
@@ -215,7 +231,7 @@ public abstract class Entity : MonoBehaviour
         isMoving = false;
 
         // check if the entity should die
-        if (TileBeneath == null)
+        if (!IsAboveGround)
         {
             Die();
         }

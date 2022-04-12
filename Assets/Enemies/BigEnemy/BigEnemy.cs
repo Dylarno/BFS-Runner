@@ -92,7 +92,7 @@ public class BigEnemy : Entity
                 transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
 
                 // check if the entity should die
-                if (TileBeneath == null)
+                if (!IsAboveGround)
                     isDone = true;
 
                 yield return null;
@@ -102,7 +102,7 @@ public class BigEnemy : Entity
         isMoving = false;
 
         // check if the entity should die
-        if (TileBeneath == null)
+        if (!IsAboveGround)
         {
             Die();
         }

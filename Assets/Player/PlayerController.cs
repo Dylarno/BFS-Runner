@@ -65,13 +65,12 @@ public class PlayerController : Entity
         HandleMovement();
         HandleDigging();
 
-        if (!isMoving)
+        if (!isMoving && IsLookingAtGround)
         {
             digIndicator.SetActive(true);
 
             var tileWorldSpace = LevelManager.Instance.l1Tilemap.GetCellCenterWorld(GridLookingLocation);
-            var tileWorldSpaceAdjusted = new Vector3(tileWorldSpace.x, tileWorldSpace.y - 0.25f);
-            digIndicator.transform.position = tileWorldSpaceAdjusted;
+            digIndicator.transform.position = tileWorldSpace;
         }
 
         else
@@ -172,7 +171,7 @@ public class PlayerController : Entity
             if (isMoving)
                 return;
 
-            // dig
+            // ensure the tile isn't empty
             if (LevelManager.Instance.l1Tilemap.GetTile(GridLookingLocation) == LevelManager.Instance.empty)
                 return;
 
@@ -187,14 +186,14 @@ public class PlayerController : Entity
     {
         // Store dug tile location:
         var dugTileLocation = GridLookingLocation;
+        TileBase tileToDig = LevelManager.Instance.l1Tilemap.GetTile(GridLookingLocation);
 
         // Set the tile to empty: 
         LevelManager.Instance.l1Tilemap.SetTile(dugTileLocation, LevelManager.Instance.empty);
 
         // Play the dug tile animation;
         var tileWorldSpace = LevelManager.Instance.l1Tilemap.GetCellCenterWorld(dugTileLocation);
-        var tileWorldSpaceAdjusted = new Vector3(tileWorldSpace.x, tileWorldSpace.y - 0.25f);
-        var animatedDugTile = Instantiate(dugTileSprite, tileWorldSpaceAdjusted, Quaternion.identity);
+        var animatedDugTile = Instantiate(dugTileSprite, tileWorldSpace, Quaternion.identity);
         GetComponent<AudioSource>().PlayOneShot(digSound);
 
         // Clean up the animation GameObject:
@@ -203,13 +202,15 @@ public class PlayerController : Entity
         yield return new WaitForSeconds(2f);
 
         // Play the undug animation:
-        var animatedUndugTile = Instantiate(undugTileSprite, tileWorldSpaceAdjusted, Quaternion.identity);
+        var animatedUndugTile = Instantiate(undugTileSprite, tileWorldSpace, Quaternion.identity);
         GetComponent<AudioSource>().PlayOneShot(undugSound);
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.3f);
 
         // Reset Tile:
-        LevelManager.Instance.l1Tilemap.SetTile(dugTileLocation, LevelManager.Instance.groundTile);
+        //LevelManager.Instance.l1Tilemap.SetTile(dugTileLocation, LevelManager.Instance.groundTile);
+        LevelManager.Instance.l1Tilemap.SetTile(dugTileLocation, tileToDig);
+
         Destroy(animatedUndugTile);
     }
 
@@ -226,7 +227,7 @@ public class PlayerController : Entity
             transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
 
             // check if the entity should die
-            if (TileBeneath == null)
+            if (!IsAboveGround)
                 isDone = true;
 
             yield return null;
@@ -238,7 +239,7 @@ public class PlayerController : Entity
             PlayerStopped();
 
         // check if the entity should die
-        if (TileBeneath == null)
+        if (!IsAboveGround)
         {
             Die();
             if (PlayerDied != null && !isInvincible)
