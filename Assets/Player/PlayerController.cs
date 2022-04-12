@@ -68,7 +68,7 @@ public class PlayerController : Entity
 
         // check if the other is an enemy
         Entity otherEntity = collision.GetComponent<Entity>();
-        if (otherEntity != null && otherEntity.entityType == EntityType.Enemy)
+        if (otherEntity != null && otherEntity.entityType == EntityType.Enemy && otherEntity.isAlive)
         {
             Die();
             if (PlayerDied != null)
