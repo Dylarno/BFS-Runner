@@ -9,6 +9,8 @@ public class PlayerController : Entity
 
     public Vector2 input;
 
+    public TileBase thisTileBeneath;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -29,6 +31,8 @@ public class PlayerController : Entity
 
     void Update()
     {
+        thisTileBeneath = TileBeneath;
+
         // ensure is alive
         if (!isAlive)
             return;

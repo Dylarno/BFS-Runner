@@ -41,10 +41,10 @@ GameObject:
   m_Component:
   - component: {fileID: 857638954585301542}
   - component: {fileID: 857638954585301543}
-  - component: {fileID: 857638954585301545}
+  - component: {fileID: 2392225802533996911}
   - component: {fileID: 4537019801626895200}
   m_Layer: 0
-  m_Name: Player
+  m_Name: BlindEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -83,7 +83,7 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
---- !u!114 &857638954585301545
+--- !u!114 &2392225802533996911
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,15 +92,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 857638954585301540}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cca419eaa8c17544a3f55f4186a116b, type: 3}
+  m_Script: {fileID: 11500000, guid: 18da8da30ca22d74789698c50c28e3bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
+  moveSpeed: 1.5
   isMoving: 0
   isAlive: 1
-  entityType: 0
-  dieSound: {fileID: 8300000, guid: 0e1eed134af7acc47b3b8b4243d61cbe, type: 3}
-  input: {x: 0, y: 0}
+  entityType: 1
+  dieSound: {fileID: 0}
+  waypoints: []
 --- !u!82 &4537019801626895200
 AudioSource:
   m_ObjectHideFlags: 0

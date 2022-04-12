@@ -3,11 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+public enum EntityType
+{
+    Player,
+    Enemy
+}
+
 public abstract class Entity : MonoBehaviour
 {
     public float moveSpeed;
     public bool isMoving;
     public bool isAlive;
+    public EntityType entityType;
 
     protected Vector2 forwardVector;
     protected Animation _animation;
@@ -27,6 +34,7 @@ public abstract class Entity : MonoBehaviour
     {
         get
         {
+            Debug.Log(LevelManager.Instance.l1Tilemap.GetTile(GridPosition));
             return LevelManager.Instance.l1Tilemap.GetTile(GridPosition);
         }
     }
@@ -67,13 +75,14 @@ public abstract class Entity : MonoBehaviour
         while ((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
+
             yield return null;
         }
 
         transform.position = targetPos;
         isMoving = false;
 
-        // check if the player should die
+        // check if the entity should die
         if (TileBeneath == null)
             Die();
     }
