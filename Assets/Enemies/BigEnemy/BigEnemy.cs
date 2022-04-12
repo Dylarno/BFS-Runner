@@ -19,7 +19,6 @@ public class CameFromVector3
 public class BigEnemy : Entity
 {
     public List<Vector3Int> travelWaypoints = new List<Vector3Int>();
-    public List<CameFromVector3> cameFrom;
     private Vector3 playerPosition;
 
     private void Start()
