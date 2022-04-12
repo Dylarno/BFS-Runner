@@ -101,9 +101,12 @@ MonoBehaviour:
   isMoving: 0
   isAlive: 1
   entityType: 0
+  _animation: {fileID: 0}
+  audioSource: {fileID: 0}
   dieSound: {fileID: 8300000, guid: 0e1eed134af7acc47b3b8b4243d61cbe, type: 3}
+  smellPrefab: {fileID: 3727381267595545964, guid: 615910156f3fd72479838d7bb5fb3bf2, type: 3}
   input: {x: 0, y: 0}
-  thisTileBeneath: {fileID: 0}
+  smells: []
 --- !u!82 &4537019801626895200
 AudioSource:
   m_ObjectHideFlags: 0

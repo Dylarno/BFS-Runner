@@ -11,14 +11,13 @@ public enum EntityType
 
 public abstract class Entity : MonoBehaviour
 {
+    [Header("Entity Config")]
     public float moveSpeed;
     public bool isMoving;
     public bool isAlive;
     public EntityType entityType;
 
     protected Vector2 forwardVector;
-    protected Animation _animation;
-    protected AudioSource audioSource;
 
     public AudioClip dieSound;
 
@@ -54,35 +53,43 @@ public abstract class Entity : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        _animation = GetComponent<Animation>();
-        audioSource = GetComponent<AudioSource>();
-    }
-
     public void Die()
     {
-        _animation.Play("Die");
-        audioSource.PlayOneShot(dieSound);
+        // ensure isn't already dead
+        if (!isAlive)
+            return;
+
+        GetComponent<Animation>().Play("Die");
+        GetComponent<AudioSource>().PlayOneShot(dieSound);
         isAlive = false;
     }
 
     protected IEnumerator Move(Vector3 targetPos)
     {
         isMoving = true;
+        bool isDone = false;
 
-        while ((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon)
+        while (!isDone && (targetPos - transform.position).sqrMagnitude > Mathf.Epsilon)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
+
+            // check if the entity should die
+            if (TileBeneath == null)
+                isDone = true;
 
             yield return null;
         }
 
-        transform.position = targetPos;
         isMoving = false;
 
         // check if the entity should die
         if (TileBeneath == null)
+        {
             Die();
+        }
+        else
+        {
+            transform.position = targetPos;
+        }
     }
 }

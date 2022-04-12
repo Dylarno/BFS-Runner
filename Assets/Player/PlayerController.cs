@@ -5,11 +5,21 @@ using UnityEngine.Tilemaps;
 
 public class PlayerController : Entity
 {
+    public delegate void PlayerDelegate();
+    public static event PlayerDelegate PlayerMoved;
+    public static event PlayerDelegate PlayerDug;
+    public static event PlayerDelegate PlayerDied;
+    public static event PlayerDelegate PlayerEscaped;
     public static PlayerController Instance { get; private set; }
 
-    public Vector2 input;
+    [Header("Player Config")]
+    public GameObject smellPrefab;
 
-    public TileBase thisTileBeneath;
+    [Header("Do not touch")]
+    public Vector2 input;
+    public List<Transform> smells = new List<Transform>();
+
+    private bool hasMoved;
 
     private void Awake()
     {
@@ -25,14 +35,12 @@ public class PlayerController : Entity
 
     private void Start()
     {
-        _animation = GetComponent<Animation>();
-        audioSource = GetComponent<AudioSource>();
+        // create a smell for sniffers
+        smells.Add(Instantiate(smellPrefab, transform.position, Quaternion.identity).transform);
     }
 
     void Update()
     {
-        thisTileBeneath = TileBeneath;
-
         // ensure is alive
         if (!isAlive)
             return;
@@ -64,7 +72,7 @@ public class PlayerController : Entity
         // calculate forward vector
         forwardVector = input;
 
-        var targetPos = transform.position;
+        Vector3 targetPos = transform.position;
 
         if (input.x != 0)
         {
@@ -78,6 +86,24 @@ public class PlayerController : Entity
             targetPos.x += 0.5f * Mathf.Sign(input.y);
         }
 
+        // move the player
+        MovePlayer(targetPos);
+    }
+
+    private void MovePlayer(Vector3 targetPos)
+    {
+        if (hasMoved)
+        {
+            // create a new smell and add it to the list of smells
+            smells.Add(Instantiate(smellPrefab, transform.position, Quaternion.identity).transform);
+        } else
+            hasMoved = true;
+
+        // call playerMoved
+        if (PlayerMoved != null)
+            PlayerMoved();
+
+        // move the player
         StartCoroutine(Move(targetPos));
     }
 
@@ -90,7 +116,10 @@ public class PlayerController : Entity
             if (isMoving)
                 return;
 
+            // dig
             LevelManager.Instance.l1Tilemap.SetTile(GridLookingLocation, null);
+            if (PlayerDug != null)
+                PlayerDug();
         }
     }
 }

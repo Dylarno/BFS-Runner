@@ -41,11 +41,11 @@ GameObject:
   m_Component:
   - component: {fileID: 857638954585301542}
   - component: {fileID: 857638954585301543}
-  - component: {fileID: 2392225802533996911}
   - component: {fileID: 6794880103207553270}
+  - component: {fileID: 1255576234646955563}
   - component: {fileID: 4537019801626895200}
   m_Layer: 0
-  m_Name: BlindEnemy
+  m_Name: SnifferEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84,25 +84,6 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
---- !u!114 &2392225802533996911
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 857638954585301540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18da8da30ca22d74789698c50c28e3bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 1.5
-  isMoving: 0
-  isAlive: 1
-  entityType: 1
-  dieSound: {fileID: 8300000, guid: 0e1eed134af7acc47b3b8b4243d61cbe, type: 3}
-  waypoints: []
-  thisTileBeneath: {fileID: 0}
 --- !u!58 &6794880103207553270
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -119,6 +100,23 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.2
+--- !u!114 &1255576234646955563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 857638954585301540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16548e70ed1b46647a1e39f834ca9ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 1
+  isMoving: 0
+  isAlive: 1
+  entityType: 1
+  dieSound: {fileID: 8300000, guid: 0e1eed134af7acc47b3b8b4243d61cbe, type: 3}
 --- !u!82 &4537019801626895200
 AudioSource:
   m_ObjectHideFlags: 0
@@ -287,7 +285,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 91f70ef7cbd5efa428684fa361c7c935, type: 3}
-  m_Color: {r: 0.2552711, g: 0.48959798, b: 0.5471698, a: 1}
+  m_Color: {r: 0, g: 0.8113208, b: 0.5632454, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
