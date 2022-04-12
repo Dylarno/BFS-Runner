@@ -14,6 +14,7 @@ public class PlayerController : Entity
     public static PlayerController Instance { get; private set; }
 
     public GameObject dugTileSprite;
+    public GameObject undugTileSprite;
 
     [Header("Player Config")]
     public GameObject smellPrefab;
@@ -27,6 +28,7 @@ public class PlayerController : Entity
     public GameObject digIndicator;
 
     public AudioClip digSound;
+    public AudioClip undugSound;
     public AudioClip portalOpenSound;
     public AudioClip portalEnterSound;
     public AudioClip coinSound;
@@ -171,22 +173,44 @@ public class PlayerController : Entity
                 return;
 
             // dig
-            if (LevelManager.Instance.l1Tilemap.GetTile(GridLookingLocation) == null)
+            if (LevelManager.Instance.l1Tilemap.GetTile(GridLookingLocation) == LevelManager.Instance.empty)
                 return;
 
-            LevelManager.Instance.l1Tilemap.SetTile(GridLookingLocation, null);
-
-            var tileWorldSpace = LevelManager.Instance.l1Tilemap.GetCellCenterWorld(GridLookingLocation);
-            var tileWorldSpaceAdjusted = new Vector3(tileWorldSpace.x, tileWorldSpace.y - 0.25f);
-            var animatedDugTile = Instantiate(dugTileSprite, tileWorldSpaceAdjusted, Quaternion.identity);
-
-            Destroy(animatedDugTile, 1.0f);
-
-            GetComponent<AudioSource>().PlayOneShot(digSound);
+            StartCoroutine(Dig());
 
             if (PlayerDug != null)
                 PlayerDug();
         }
+    }
+
+    private IEnumerator Dig()
+    {
+        // Store dug tile location:
+        var dugTileLocation = GridLookingLocation;
+
+        // Set the tile to empty: 
+        LevelManager.Instance.l1Tilemap.SetTile(dugTileLocation, LevelManager.Instance.empty);
+
+        // Play the dug tile animation;
+        var tileWorldSpace = LevelManager.Instance.l1Tilemap.GetCellCenterWorld(dugTileLocation);
+        var tileWorldSpaceAdjusted = new Vector3(tileWorldSpace.x, tileWorldSpace.y - 0.25f);
+        var animatedDugTile = Instantiate(dugTileSprite, tileWorldSpaceAdjusted, Quaternion.identity);
+        GetComponent<AudioSource>().PlayOneShot(digSound);
+
+        // Clean up the animation GameObject:
+        Destroy(animatedDugTile, 1.0f);
+
+        yield return new WaitForSeconds(2f);
+
+        // Play the undug animation:
+        var animatedUndugTile = Instantiate(undugTileSprite, tileWorldSpaceAdjusted, Quaternion.identity);
+        GetComponent<AudioSource>().PlayOneShot(undugSound);
+
+        yield return new WaitForSeconds(1f);
+
+        // Reset Tile:
+        LevelManager.Instance.l1Tilemap.SetTile(dugTileLocation, LevelManager.Instance.groundTile);
+        Destroy(animatedUndugTile);
     }
 
     private new IEnumerator Move(Vector3 targetPos)

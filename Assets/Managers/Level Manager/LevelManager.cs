@@ -13,6 +13,9 @@ public class LevelManager : MonoBehaviour
     private GameObject portal;
     public List<GameObject> coins;
 
+    public TileBase groundTile;
+    public TileBase empty;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)

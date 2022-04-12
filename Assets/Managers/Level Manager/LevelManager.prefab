@@ -43,3 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21063d23905aaf24db47b7bac3d9b716, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grid: {fileID: 0}
+  l1Tilemap: {fileID: 0}
+  coins: []
+  groundTile: {fileID: 11400000, guid: d5da506439084ed4a9d7333b697dffad, type: 2}
