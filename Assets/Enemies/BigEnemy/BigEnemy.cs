@@ -193,7 +193,7 @@ public class BigEnemy : Entity
         isMoving = true;
         bool isDone = false;
 
-        Vector3 targetPos = LevelManager.Instance.grid.CellToWorld(travelWaypoints[travelWaypoints.Count - 1]);
+        Vector3 targetPos = new Vector3(0, 0.25f, 0) + LevelManager.Instance.grid.CellToWorld(travelWaypoints[travelWaypoints.Count - 1]);
         Vector3 lastTargetPosition = playerPosition;
 
         for (int i = 0; i < travelWaypoints.Count; i++)
@@ -214,7 +214,7 @@ public class BigEnemy : Entity
             }
 
             // get the target position
-            targetPos = LevelManager.Instance.grid.CellToWorld(travelWaypoints[i]);
+            targetPos = new Vector3(0, 0.25f, 0) + LevelManager.Instance.grid.CellToWorld(travelWaypoints[i]);
 
             while (!isDone && (targetPos - transform.position).sqrMagnitude > Mathf.Epsilon)
             {
