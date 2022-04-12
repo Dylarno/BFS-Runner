@@ -41,6 +41,16 @@ public class PlayerController : Entity
         HandleDigging();
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        switch (collision.GetComponent<Entity>().entityType)
+        {
+            case EntityType.Enemy:
+                Die();
+                break;
+        }
+    }
+
     private void HandleMovement()
     {
         if (isMoving) return;

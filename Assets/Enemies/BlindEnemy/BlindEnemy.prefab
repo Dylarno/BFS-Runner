@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 857638954585301542}
   - component: {fileID: 857638954585301543}
   - component: {fileID: 2392225802533996911}
+  - component: {fileID: 6794880103207553270}
   - component: {fileID: 4537019801626895200}
   m_Layer: 0
   m_Name: BlindEnemy
@@ -102,6 +103,22 @@ MonoBehaviour:
   dieSound: {fileID: 8300000, guid: 0e1eed134af7acc47b3b8b4243d61cbe, type: 3}
   waypoints: []
   thisTileBeneath: {fileID: 0}
+--- !u!58 &6794880103207553270
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 857638954585301540}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.2
 --- !u!82 &4537019801626895200
 AudioSource:
   m_ObjectHideFlags: 0
