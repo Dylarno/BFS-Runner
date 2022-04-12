@@ -217,6 +217,8 @@ public class PlayerController : Entity
         if (TileBeneath == null)
         {
             Die();
+            if (PlayerDied != null && !isInvincible)
+                PlayerDied();
         }
         else
         {
