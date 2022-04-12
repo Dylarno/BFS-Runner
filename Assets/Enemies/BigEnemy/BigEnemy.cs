@@ -18,16 +18,23 @@ public class CameFromVector3
 
 public class BigEnemy : Entity
 {
+    [Header("BigEnemy Config")]
+    public float digReactionTime;
+
+    [Header("Do not touch")]
     public List<Vector3Int> travelWaypoints = new List<Vector3Int>();
     public bool isDone = false;
     private Vector3 playerPosition;
+    private float playerDigTime;
 
     private void Start()
     {
         // setup event listeners
         PlayerController.PlayerMoved += OnPlayerMoved;
         PlayerController.PlayerStopped += OnPlayerMoved;
+        PlayerController.PlayerDug += OnPlayerDug;
 
+        playerDigTime = Time.time;
         ChasePlayer();
     }
 
@@ -36,6 +43,7 @@ public class BigEnemy : Entity
         // clear event listeners
         PlayerController.PlayerMoved -= OnPlayerMoved;
         PlayerController.PlayerStopped -= OnPlayerMoved;
+        PlayerController.PlayerDug -= OnPlayerDug;
     }
     private void OnPlayerMoved()
     {
@@ -43,6 +51,11 @@ public class BigEnemy : Entity
 
         if (!isMoving)
             ChasePlayer();
+    }
+
+    private void OnPlayerDug()
+    {
+        playerDigTime = Time.time;
     }
 
     private void ChasePlayer()
@@ -66,6 +79,7 @@ public class BigEnemy : Entity
 
         Vector3 targetPos = new Vector3(0, 0.25f, 0) + LevelManager.Instance.grid.CellToWorld(travelWaypoints[travelWaypoints.Count - 1]);
         Vector3 lastTargetPosition = playerPosition;
+        float lastPlayerDigTime = playerDigTime;
 
         for (int i = 0; i < travelWaypoints.Count; i++)
         {
@@ -73,13 +87,17 @@ public class BigEnemy : Entity
             if (isDone)
                 continue;
 
-            // check if the player has moved
-            if (Vector3.Distance(playerPosition, lastTargetPosition) > float.Epsilon)
+            // check if the player has moved or recently dug
+            if (Vector3.Distance(playerPosition, lastTargetPosition) > float.Epsilon
+                || (playerDigTime - lastPlayerDigTime) >= digReactionTime)
             {
+                Debug.Log("Pathfinding...");
+
                 // re-find the player
                 FindPlayer();
 
                 // reset variables
+                lastPlayerDigTime = playerDigTime;
                 lastTargetPosition = playerPosition;
                 i = 0;
             }
@@ -97,6 +115,8 @@ public class BigEnemy : Entity
 
                 yield return null;
             }
+
+            yield return new WaitForEndOfFrame();
         }
 
         isMoving = false;

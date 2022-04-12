@@ -119,6 +119,7 @@ MonoBehaviour:
   isAlive: 1
   entityType: 1
   dieSound: {fileID: 8300000, guid: 0e1eed134af7acc47b3b8b4243d61cbe, type: 3}
+  digReactionTime: 5
   travelWaypoints: []
   isDone: 0
 --- !u!82 &4537019801626895200
