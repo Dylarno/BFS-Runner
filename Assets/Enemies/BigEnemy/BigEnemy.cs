@@ -26,6 +26,7 @@ public class BigEnemy : Entity
     {
         // setup event listeners
         PlayerController.PlayerMoved += OnPlayerMoved;
+        PlayerController.PlayerStopped += OnPlayerMoved;
 
         ChasePlayer();
     }
@@ -34,10 +35,14 @@ public class BigEnemy : Entity
     {
         // clear event listeners
         PlayerController.PlayerMoved -= OnPlayerMoved;
+        PlayerController.PlayerStopped -= OnPlayerMoved;
     }
     private void OnPlayerMoved()
     {
         playerPosition = PlayerController.Instance.transform.position;
+
+        if (!isMoving)
+            ChasePlayer();
     }
 
     private void ChasePlayer()
