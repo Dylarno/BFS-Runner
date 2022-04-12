@@ -7,6 +7,7 @@ public class PlayerController : Entity
 {
     public delegate void PlayerDelegate();
     public static event PlayerDelegate PlayerMoved;
+    public static event PlayerDelegate PlayerStopped;
     public static event PlayerDelegate PlayerDug;
     public static event PlayerDelegate PlayerDied;
     public static event PlayerDelegate PlayerEscaped;
@@ -85,10 +86,10 @@ public class PlayerController : Entity
 
         // check if the other is an enemy
         Entity otherEntity = collision.GetComponent<Entity>();
-        if (otherEntity != null && otherEntity.entityType == EntityType.Enemy)
+        if (otherEntity != null && otherEntity.entityType == EntityType.Enemy && otherEntity.isAlive)
         {
             Die();
-            if (PlayerDied != null)
+            if (PlayerDied != null && !isInvincible)
                 PlayerDied();
 
             return;
@@ -185,6 +186,41 @@ public class PlayerController : Entity
 
             if (PlayerDug != null)
                 PlayerDug();
+        }
+    }
+
+    private new IEnumerator Move(Vector3 targetPos)
+    {
+        if (doLog)
+            Debug.Log("HERE");
+
+        isMoving = true;
+        bool isDone = false;
+
+        while (!isDone && (targetPos - transform.position).sqrMagnitude > Mathf.Epsilon)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
+
+            // check if the entity should die
+            if (TileBeneath == null)
+                isDone = true;
+
+            yield return null;
+        }
+
+        isMoving = false;
+
+        if (PlayerStopped != null)
+            PlayerStopped();
+
+        // check if the entity should die
+        if (TileBeneath == null)
+        {
+            Die();
+        }
+        else
+        {
+            transform.position = targetPos;
         }
     }
 }

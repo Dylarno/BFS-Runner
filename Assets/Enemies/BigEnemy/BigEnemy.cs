@@ -19,13 +19,14 @@ public class CameFromVector3
 public class BigEnemy : Entity
 {
     public List<Vector3Int> travelWaypoints = new List<Vector3Int>();
-    public List<CameFromVector3> cameFrom;
+    public bool isDone = false;
     private Vector3 playerPosition;
 
     private void Start()
     {
         // setup event listeners
         PlayerController.PlayerMoved += OnPlayerMoved;
+        PlayerController.PlayerStopped += OnPlayerMoved;
 
         ChasePlayer();
     }
@@ -34,10 +35,14 @@ public class BigEnemy : Entity
     {
         // clear event listeners
         PlayerController.PlayerMoved -= OnPlayerMoved;
+        PlayerController.PlayerStopped -= OnPlayerMoved;
     }
     private void OnPlayerMoved()
     {
         playerPosition = PlayerController.Instance.transform.position;
+
+        if (!isMoving)
+            ChasePlayer();
     }
 
     private void ChasePlayer()
@@ -57,7 +62,7 @@ public class BigEnemy : Entity
     protected IEnumerator Move()
     {
         isMoving = true;
-        bool isDone = false;
+        isDone = false;
 
         Vector3 targetPos = new Vector3(0, 0.25f, 0) + LevelManager.Instance.grid.CellToWorld(travelWaypoints[travelWaypoints.Count - 1]);
         Vector3 lastTargetPosition = playerPosition;
