@@ -2043,6 +2043,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 523348649}
     m_Modifications:
+    - target: {fileID: 1424106968812425702, guid: 7f31a7976d1ec1e458d169409b147f81, type: 3}
+      propertyPath: m_Name
+      value: Text_Title
+      objectReference: {fileID: 0}
     - target: {fileID: 7204264510322336472, guid: 7f31a7976d1ec1e458d169409b147f81, type: 3}
       propertyPath: m_Name
       value: DeathScreen
