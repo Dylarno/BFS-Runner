@@ -52,7 +52,9 @@ public class SceneController : MonoBehaviour
         {
             awaitingSceneChange = false;
             awaitingRetry = false;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            int activeSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(
+                activeSceneIndex < SceneManager.sceneCountInBuildSettings - 1 ? activeSceneIndex + 1 : 0);
             return;
         }
     }
