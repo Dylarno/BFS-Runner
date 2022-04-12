@@ -23,6 +23,8 @@ public class PlayerController : Entity
 
     private bool hasMoved;
 
+    public GameObject digIndicator;
+
     public AudioClip digSound;
     public AudioClip portalOpenSound;
     public AudioClip portalEnterSound;
@@ -44,6 +46,7 @@ public class PlayerController : Entity
     {
         // create a smell for sniffers
         smells.Add(Instantiate(smellPrefab, transform.position, Quaternion.identity).transform);
+        forwardVector = new Vector3(0, 1);
     }
 
     void Update()
@@ -58,6 +61,20 @@ public class PlayerController : Entity
 
         HandleMovement();
         HandleDigging();
+
+        if (!isMoving)
+        {
+            digIndicator.SetActive(true);
+
+            var tileWorldSpace = LevelManager.Instance.l1Tilemap.GetCellCenterWorld(GridLookingLocation);
+            var tileWorldSpaceAdjusted = new Vector3(tileWorldSpace.x, tileWorldSpace.y - 0.25f);
+            digIndicator.transform.position = tileWorldSpaceAdjusted;
+        }
+
+        else
+        {
+            digIndicator.SetActive(false);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -153,6 +170,9 @@ public class PlayerController : Entity
                 return;
 
             // dig
+            if (LevelManager.Instance.l1Tilemap.GetTile(GridLookingLocation) == null)
+                return;
+
             LevelManager.Instance.l1Tilemap.SetTile(GridLookingLocation, null);
 
             var tileWorldSpace = LevelManager.Instance.l1Tilemap.GetCellCenterWorld(GridLookingLocation);

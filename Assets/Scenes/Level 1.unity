@@ -3042,6 +3042,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 386692450816372862, guid: 53b62628933db9f4393791de87bd3f1f, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 857638954585301540, guid: 53b62628933db9f4393791de87bd3f1f, type: 3}
       propertyPath: m_Name
       value: Player
@@ -3107,8 +3111,24 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 857638954969797201, guid: 53b62628933db9f4393791de87bd3f1f, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 857638954969797201, guid: 53b62628933db9f4393791de87bd3f1f, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 857638955134453115, guid: 53b62628933db9f4393791de87bd3f1f, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3527845873403493067, guid: 53b62628933db9f4393791de87bd3f1f, type: 3}
+      propertyPath: m_Name
+      value: DigIndicator
+      objectReference: {fileID: 0}
+    - target: {fileID: 3527845873403493067, guid: 53b62628933db9f4393791de87bd3f1f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53b62628933db9f4393791de87bd3f1f, type: 3}
