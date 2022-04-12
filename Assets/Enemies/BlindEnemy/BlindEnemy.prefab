@@ -102,7 +102,6 @@ MonoBehaviour:
   entityType: 1
   dieSound: {fileID: 8300000, guid: 0e1eed134af7acc47b3b8b4243d61cbe, type: 3}
   waypoints: []
-  thisTileBeneath: {fileID: 0}
 --- !u!58 &6794880103207553270
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -285,9 +284,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 91f70ef7cbd5efa428684fa361c7c935, type: 3}
-  m_Color: {r: 0.2552711, g: 0.48959798, b: 0.5471698, a: 1}
+  m_SortingOrder: 2
+  m_Sprite: {fileID: 21300000, guid: 8e194054f8c1c3b4d91024b930a945ad, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -367,7 +366,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 25400be240135074ba0680c9e7adb546, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: Dug Tile
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: 21300000, guid: ba3ef87c52e071b4ca93ae03c609c321, type: 3}
+  - {fileID: 21300000, guid: 034f5b46a65678d43b0b2c2f8fa41b27, type: 3}
+  - {fileID: 21300000, guid: eb351f62eb55eed4783a7ceaa2505fa5, type: 3}
+  - {fileID: 21300000, guid: ec4ea82170477dd4f86e70d74f6c9af8, type: 3}
+  - {fileID: 21300000, guid: cc1e4894174981a44bea14050c0fe741, type: 3}
+  - {fileID: 21300000, guid: c7ff62f7d6bec32479e6d1487ae17d1f, type: 3}
+  - {fileID: 21300000, guid: c7ff62f7d6bec32479e6d1487ae17d1f, type: 3}
+  - {fileID: 21300000, guid: c7ff62f7d6bec32479e6d1487ae17d1f, type: 3}
+  - {fileID: 21300000, guid: c7ff62f7d6bec32479e6d1487ae17d1f, type: 3}
+  - {fileID: 21300000, guid: c7ff62f7d6bec32479e6d1487ae17d1f, type: 3}
+  - {fileID: 21300000, guid: c7ff62f7d6bec32479e6d1487ae17d1f, type: 3}
+  m_MinSpeed: 10
+  m_MaxSpeed: 10
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 0

@@ -12,6 +12,8 @@ public class PlayerController : Entity
     public static event PlayerDelegate PlayerEscaped;
     public static PlayerController Instance { get; private set; }
 
+    public GameObject dugTileSprite;
+
     [Header("Player Config")]
     public GameObject smellPrefab;
 
@@ -70,14 +72,24 @@ public class PlayerController : Entity
             return;
         }
 
+        switch (collision.tag)
+        {
+            case "Portal":
+                // call playerEscaped
+                if (PlayerEscaped != null)
+                    PlayerEscaped();
+
+                return;
+
+            case "Coin":
+                Destroy(collision.gameObject);
+                return;
+        }
+
         // check if the other is a portal
         if (collision.CompareTag("Portal"))
         {
-            // call playerEscaped
-            if (PlayerEscaped != null)
-                PlayerEscaped();
-
-            return;
+            
         }
     }
 
@@ -141,6 +153,13 @@ public class PlayerController : Entity
 
             // dig
             LevelManager.Instance.l1Tilemap.SetTile(GridLookingLocation, null);
+
+            var tileWorldSpace = LevelManager.Instance.l1Tilemap.GetCellCenterWorld(GridLookingLocation);
+            var tileWorldSpaceAdjusted = new Vector3(tileWorldSpace.x, tileWorldSpace.y - 0.25f);
+            var animatedDugTile = Instantiate(dugTileSprite, tileWorldSpaceAdjusted, Quaternion.identity);
+
+            Destroy(animatedDugTile, 1.0f);
+
             if (PlayerDug != null)
                 PlayerDug();
         }

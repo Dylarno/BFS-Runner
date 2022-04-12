@@ -101,9 +101,8 @@ MonoBehaviour:
   isMoving: 0
   isAlive: 1
   entityType: 0
-  _animation: {fileID: 0}
-  audioSource: {fileID: 0}
   dieSound: {fileID: 8300000, guid: 0e1eed134af7acc47b3b8b4243d61cbe, type: 3}
+  dugTileSprite: {fileID: 2676945747483461434, guid: 5aeaa75dc5180e44996c95e026ea71c7, type: 3}
   smellPrefab: {fileID: 3727381267595545964, guid: 615910156f3fd72479838d7bb5fb3bf2, type: 3}
   input: {x: 0, y: 0}
   smells: []
@@ -310,7 +309,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 91f70ef7cbd5efa428684fa361c7c935, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -392,7 +391,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 25400be240135074ba0680c9e7adb546, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
