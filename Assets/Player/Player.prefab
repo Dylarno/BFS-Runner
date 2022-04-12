@@ -106,6 +106,7 @@ MonoBehaviour:
   smellPrefab: {fileID: 3727381267595545964, guid: 615910156f3fd72479838d7bb5fb3bf2, type: 3}
   input: {x: 0, y: 0}
   smells: []
+  digSound: {fileID: 8300000, guid: 578c3547d12d3b14f87737c57d81a8f3, type: 3}
 --- !u!82 &4537019801626895200
 AudioSource:
   m_ObjectHideFlags: 0
@@ -118,7 +119,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -318,7 +319,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &857638955134453113

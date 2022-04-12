@@ -23,6 +23,8 @@ public class PlayerController : Entity
 
     private bool hasMoved;
 
+    public AudioClip digSound;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -159,6 +161,8 @@ public class PlayerController : Entity
             var animatedDugTile = Instantiate(dugTileSprite, tileWorldSpaceAdjusted, Quaternion.identity);
 
             Destroy(animatedDugTile, 1.0f);
+
+            GetComponent<AudioSource>().PlayOneShot(digSound);
 
             if (PlayerDug != null)
                 PlayerDug();
