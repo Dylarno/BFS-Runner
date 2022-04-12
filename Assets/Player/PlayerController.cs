@@ -41,6 +41,10 @@ public class PlayerController : Entity
 
     void Update()
     {
+        // ensure the game is running
+        if (!GameController.Instance.isGameRunning)
+            return;
+
         // ensure is alive
         if (!isAlive)
             return;
@@ -51,16 +55,35 @@ public class PlayerController : Entity
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        switch (collision.GetComponent<Entity>().entityType)
+        // ensure that the game is still running
+        if (!GameController.Instance.isGameRunning)
+            return;
+
+        // check if the other is an enemy
+        Entity otherEntity = collision.GetComponent<Entity>();
+        if (otherEntity != null && otherEntity.entityType == EntityType.Enemy)
         {
-            case EntityType.Enemy:
-                Die();
-                break;
+            Die();
+            if (PlayerDied != null)
+                PlayerDied();
+
+            return;
+        }
+
+        // check if the other is a portal
+        if (collision.CompareTag("Portal"))
+        {
+            // call playerEscaped
+            if (PlayerEscaped != null)
+                PlayerEscaped();
+
+            return;
         }
     }
 
     private void HandleMovement()
     {
+        // don't move if already moving
         if (isMoving) return;
 
         input.x = Input.GetAxisRaw("Horizontal");
