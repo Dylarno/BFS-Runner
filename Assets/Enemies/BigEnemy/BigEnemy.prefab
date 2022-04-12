@@ -112,13 +112,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: affa8cbf9ed5f4748a20241976955161, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doLog: 0
+  isInvincible: 0
   moveSpeed: 1
   isMoving: 0
   isAlive: 1
   entityType: 1
   dieSound: {fileID: 8300000, guid: 0e1eed134af7acc47b3b8b4243d61cbe, type: 3}
   travelWaypoints: []
-  cameFrom: []
+  isDone: 0
 --- !u!82 &4537019801626895200
 AudioSource:
   m_ObjectHideFlags: 0

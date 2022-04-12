@@ -71,7 +71,7 @@ public class PlayerController : Entity
         if (otherEntity != null && otherEntity.entityType == EntityType.Enemy && otherEntity.isAlive)
         {
             Die();
-            if (PlayerDied != null)
+            if (PlayerDied != null && !isInvincible)
                 PlayerDied();
 
             return;

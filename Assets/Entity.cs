@@ -13,6 +13,7 @@ public abstract class Entity : MonoBehaviour
 {
     [Header("Entity Config")]
     public bool doLog;
+    public bool isInvincible;
     public float moveSpeed;
     public bool isMoving;
     public bool isAlive;
@@ -181,6 +182,10 @@ public abstract class Entity : MonoBehaviour
     {
         // ensure isn't already dead
         if (!isAlive)
+            return;
+
+        // ensure isn't invincible
+        if (isInvincible)
             return;
 
         GetComponent<Animation>().Play("Die");
