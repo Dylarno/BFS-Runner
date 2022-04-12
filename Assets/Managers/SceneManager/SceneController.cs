@@ -7,7 +7,7 @@ public class SceneController : MonoBehaviour
 {
     public static SceneController Instance { get; private set; }
 
-    private bool awaitingSceneChange;
+    public bool awaitingSceneChange;
     private bool awaitingRetry;
 
     private void Awake()
