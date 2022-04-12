@@ -99,8 +99,9 @@ MonoBehaviour:
   isMoving: 0
   isAlive: 1
   entityType: 1
-  dieSound: {fileID: 0}
+  dieSound: {fileID: 8300000, guid: 0e1eed134af7acc47b3b8b4243d61cbe, type: 3}
   waypoints: []
+  thisTileBeneath: {fileID: 0}
 --- !u!82 &4537019801626895200
 AudioSource:
   m_ObjectHideFlags: 0

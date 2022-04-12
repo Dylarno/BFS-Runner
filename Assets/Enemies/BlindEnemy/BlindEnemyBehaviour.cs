@@ -19,8 +19,8 @@ public class BlindEnemyBehaviour : Entity
     private void DoMovement()
     {
         // don't move if dead
-        //if (!isAlive)
-        //    return;
+        if (!isAlive)
+            return;
 
         // don't move if already moving
         if (isMoving)
@@ -37,19 +37,28 @@ public class BlindEnemyBehaviour : Entity
     public new IEnumerator Move(Vector3 targetPos)
     {
         isMoving = true;
+        bool isDone = false;
 
-        while ((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon)
+        while (!isDone && (targetPos - transform.position).sqrMagnitude > Mathf.Epsilon)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
+
+            // check if the entity should die
+            if (TileBeneath == null)
+                isDone = true;
 
             yield return null;
         }
 
-        transform.position = targetPos;
         isMoving = false;
 
         // check if the entity should die
         if (TileBeneath == null)
+        {
             Die();
+        } else
+        {
+            transform.position = targetPos;
+        }
     }
 }

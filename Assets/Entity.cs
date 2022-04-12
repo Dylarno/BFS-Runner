@@ -34,7 +34,6 @@ public abstract class Entity : MonoBehaviour
     {
         get
         {
-            Debug.Log(LevelManager.Instance.l1Tilemap.GetTile(GridPosition));
             return LevelManager.Instance.l1Tilemap.GetTile(GridPosition);
         }
     }
