@@ -16,16 +16,18 @@ public class CameFromVector3
     public Vector3Int cameFrom;
 }
 
-
 public class BigEnemy : Entity
 {
     public List<Vector3Int> travelWaypoints = new List<Vector3Int>();
     public List<CameFromVector3> cameFrom;
+    private Vector3 playerPosition;
 
     private void Start()
     {
         // setup event listeners
         PlayerController.PlayerMoved += OnPlayerMoved;
+
+        ChasePlayer();
     }
 
     private void OnDestroy()
@@ -33,12 +35,20 @@ public class BigEnemy : Entity
         // clear event listeners
         PlayerController.PlayerMoved -= OnPlayerMoved;
     }
-
     private void OnPlayerMoved()
     {
-        StopCoroutine(Move());
-        isMoving = false;
+        playerPosition = PlayerController.Instance.transform.position;
+    }
 
+    private void ChasePlayer()
+    {
+        isMoving = false;
+        FindPlayer();
+        StartCoroutine(Move());
+    }
+
+    private void FindPlayer()
+    {
         Vector3Int startingPosition = LevelManager.Instance.grid.WorldToCell(transform.position);
         Vector3Int targetPosition = LevelManager.Instance.grid.WorldToCell(PlayerController.Instance.transform.position);
 
@@ -47,8 +57,6 @@ public class BigEnemy : Entity
 
         travelWaypoints.Add(startingPosition);
         travelWaypoints.Reverse();
-
-        StartCoroutine(Move());
     }
 
     private void FindTarget(Vector3Int startingPosition, Vector3Int targetPosition)
@@ -185,16 +193,28 @@ public class BigEnemy : Entity
         isMoving = true;
         bool isDone = false;
 
-        Vector3 targetPos = LevelManager.Instance.grid.CellToWorld(travelWaypoints[travelWaypoints.Count - 1]);
+        Vector3 targetPos = new Vector3(0, 0.25f, 0) + LevelManager.Instance.grid.CellToWorld(travelWaypoints[travelWaypoints.Count - 1]);
+        Vector3 lastTargetPosition = playerPosition;
 
-        foreach (Vector3Int waypoint in travelWaypoints)
+        for (int i = 0; i < travelWaypoints.Count; i++)
         {
             // ensure we are not done
             if (isDone)
                 continue;
 
+            // check if the player has moved
+            if (Vector3.Distance(playerPosition, lastTargetPosition) > float.Epsilon)
+            {
+                // re-find the player
+                FindPlayer();
+
+                // reset variables
+                lastTargetPosition = playerPosition;
+                i = 0;
+            }
+
             // get the target position
-            targetPos = LevelManager.Instance.grid.CellToWorld(waypoint);
+            targetPos = new Vector3(0, 0.25f, 0) + LevelManager.Instance.grid.CellToWorld(travelWaypoints[i]);
 
             while (!isDone && (targetPos - transform.position).sqrMagnitude > Mathf.Epsilon)
             {
