@@ -3,52 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Entity
 {
     public static PlayerController Instance { get; private set; }
 
-    public float moveSpeed;
-    public bool isMoving;
-    public bool isAlive;
-
     public Vector2 input;
-    private Vector2 forwardVector;
-    private Animation _animation;
-    private AudioSource audioSource;
-
-    public AudioClip dieSound;
-
-    public TileBase TileInFront
-    {
-        get
-        {
-            return LevelManager.Instance.l1Tilemap.GetTile(GridLookingLocation);
-        }
-    }
-
-    public TileBase TileBeneath
-    {
-        get
-        {
-            return LevelManager.Instance.l1Tilemap.GetTile(GridPosition);
-        }
-    }
-
-    public Vector3Int GridPosition
-    {
-        get
-        {
-            return LevelManager.Instance.grid.WorldToCell(transform.position);
-        }
-    }
-
-    public Vector3Int GridLookingLocation
-    {
-        get
-        {
-            return GridPosition + Vector3Int.RoundToInt(new Vector3(forwardVector.y, -forwardVector.x, 0));
-        }
-    }
 
     private void Awake()
     {
@@ -119,30 +78,5 @@ public class PlayerController : MonoBehaviour
 
             LevelManager.Instance.l1Tilemap.SetTile(GridLookingLocation, null);
         }
-    }
-
-    public void Die()
-    {
-        _animation.Play("Die");
-        audioSource.PlayOneShot(dieSound);
-        isAlive = false;
-    }
-
-    IEnumerator Move(Vector3 targetPos)
-    {
-        isMoving = true;
-
-        while ((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
-            yield return null;
-        }
-
-        transform.position = targetPos;
-        isMoving = false;
-
-        // check if the player should die
-        if (TileBeneath == null)
-            Die();
     }
 }
