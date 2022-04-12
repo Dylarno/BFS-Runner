@@ -24,6 +24,9 @@ public class PlayerController : Entity
     private bool hasMoved;
 
     public AudioClip digSound;
+    public AudioClip portalOpenSound;
+    public AudioClip portalEnterSound;
+    public AudioClip coinSound;
 
     private void Awake()
     {
@@ -77,21 +80,17 @@ public class PlayerController : Entity
         switch (collision.tag)
         {
             case "Portal":
-                // call playerEscaped
+                GetComponent<AudioSource>().PlayOneShot(portalEnterSound);
+
                 if (PlayerEscaped != null)
                     PlayerEscaped();
 
                 return;
 
             case "Coin":
+                GetComponent<AudioSource>().PlayOneShot(coinSound);
                 Destroy(collision.gameObject);
                 return;
-        }
-
-        // check if the other is a portal
-        if (collision.CompareTag("Portal"))
-        {
-            
         }
     }
 

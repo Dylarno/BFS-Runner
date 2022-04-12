@@ -107,6 +107,9 @@ MonoBehaviour:
   input: {x: 0, y: 0}
   smells: []
   digSound: {fileID: 8300000, guid: 578c3547d12d3b14f87737c57d81a8f3, type: 3}
+  portalOpenSound: {fileID: 8300000, guid: 82f29dfddef4a794aaba6853885c36a8, type: 3}
+  portalEnterSound: {fileID: 8300000, guid: adc55a1502c5866449fa7b550ef05281, type: 3}
+  coinSound: {fileID: 8300000, guid: e254c939c950e7f4c8f0946109e8977b, type: 3}
 --- !u!82 &4537019801626895200
 AudioSource:
   m_ObjectHideFlags: 0

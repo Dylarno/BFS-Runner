@@ -67,5 +67,6 @@ public class LevelManager : MonoBehaviour
     {
         portal.GetComponent<CircleCollider2D>().enabled = true;
         portal.transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.white;
+        PlayerController.Instance.GetComponent<AudioSource>().PlayOneShot(PlayerController.Instance.portalOpenSound);
     }
 }
