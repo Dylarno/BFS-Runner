@@ -17,6 +17,8 @@ public class PlayerController : Entity
     public GameObject undugTileSprite;
 
     [Header("Player Config")]
+    public float moveDelay;
+    public bool countingMoveDelay;
     public GameObject smellPrefab;
 
     [Header("Do not touch")]
@@ -50,6 +52,7 @@ public class PlayerController : Entity
         // create a smell for sniffers
         smells.Add(Instantiate(smellPrefab, transform.position, Quaternion.identity).transform);
         forwardVector = new Vector3(0, 1);
+        countingMoveDelay = false;
     }
 
     void Update()
@@ -121,28 +124,50 @@ public class PlayerController : Entity
         input.x = Input.GetAxisRaw("Horizontal");
         input.y = Input.GetAxisRaw("Vertical");
 
-        if (input == Vector2.zero) return;
-        if (input.x != 0) input.y = 0;
-
-        // calculate forward vector
-        forwardVector = input;
-
-        Vector3 targetPos = transform.position;
-
-        if (input.x != 0)
+        if (input != Vector2.zero && !countingMoveDelay)
         {
-            targetPos.x += input.x / 2f;
-            targetPos.y -= 0.25f * Mathf.Sign(input.x);
+            moveDelay = Time.time;
+            countingMoveDelay = true;
         }
 
-        else if (input.y != 0)
+        if (input == Vector2.zero)
         {
-            targetPos.y += input.y / 4f;
-            targetPos.x += 0.5f * Mathf.Sign(input.y);
+            countingMoveDelay = false;
         }
 
-        // move the player
-        MovePlayer(targetPos);
+        if (input != Vector2.zero)
+        {
+            if ((Time.time - moveDelay > 0.15f))
+            {
+                if (input.x != 0) input.y = 0;
+
+                // calculate forward vector
+                forwardVector = input;
+
+                Vector3 targetPos = transform.position;
+
+                if (input.x != 0)
+                {
+                    targetPos.x += input.x / 2f;
+                    targetPos.y -= 0.25f * Mathf.Sign(input.x);
+                }
+
+                else if (input.y != 0)
+                {
+                    targetPos.y += input.y / 4f;
+                    targetPos.x += 0.5f * Mathf.Sign(input.y);
+                }
+
+                // move the player
+                MovePlayer(targetPos);
+            }
+
+            else
+            {
+                if (input.x != 0) input.y = 0;
+                forwardVector = new Vector2(input.x, input.y);
+            }
+        }
     }
 
     private void MovePlayer(Vector3 targetPos)
